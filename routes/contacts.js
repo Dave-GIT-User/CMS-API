@@ -87,8 +87,37 @@ router.post("/:id", async (req, res, next) => {
     });  
 });
 */
+router.put('/:id', (req, res, next) => {
+    Contact.findOne({ id: req.params.id })
+        .then(contact => {
+            contact.id = req.body.id;
+            contact.name = req.body.name;
+            contact.email = req.body.email;
+            contact.phone = req.body.phone;
+            contact.imageUrl = req.body.imageUrl;
+  
+            contact.updateOne({ id: req.params.id }, contact)
+                .then(result => {
+                    res.status(204).json({
+                    message: 'Contact updated successfully'
+            })
+        })
+            .catch(error => {
+                res.status(500).json({
+                message: 'An error occurred',
+                error: error
+            });
+        });
+    })
+        .catch(error => {
+            res.status(500).json({
+            message: 'Contact not found.',
+            error: { contact: 'Contact not found'}
+        });
+    });
+});
 router.delete("/:id", (req, res, next) => { 
-    
+
   Contact.findOne({ id: req.params.id })
       .then(contact => {
           contact.deleteOne({ id: req.params.id })
