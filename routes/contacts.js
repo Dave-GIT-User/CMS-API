@@ -87,7 +87,8 @@ router.post("/:id", async (req, res, next) => {
     });  
 });
 */
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", (req, res, next) => { 
+    
   Contact.findOne({ id: req.params.id })
       .then(contact => {
           contact.deleteOne({ id: req.params.id })
