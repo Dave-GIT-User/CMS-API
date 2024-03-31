@@ -58,13 +58,13 @@ router.post("/:id", async (req, res, next) => {
 // update a single document
 router.put('/:id', async (req, res, next) => {
     try {
-        const document = new Document({
+        const document = {
             id: req.body.id,
             name: req.body.name,
             description: req.body.description,
             url: req.body.url
-        });
-        await document
+        };
+        await Document
         .updateOne({ id: req.params.id }, document)
         .then(result => {
             // put returns nothing anyway.
