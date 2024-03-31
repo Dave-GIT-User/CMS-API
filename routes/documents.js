@@ -38,7 +38,6 @@ router.post("/:id", async (req, res, next) => {
             description: req.body.description,
             url: req.body.url
         });
-        console.log(document);
         document
             .save()
             .then((createdDocument) => {
@@ -57,35 +56,33 @@ router.post("/:id", async (req, res, next) => {
 });
 
 // update a single document
-router.put('/:id', (req, res, next) => {
-    Document.findOne({ id: req.params.id })
-        .then(document => {
-            document.id = req.body.id;
-            document.name = req.body.name;
-            document.description = req.body.description;
-            document.url = req.body.url;
-  
-            Document.updateOne({ id: req.params.id }, document)
-                .then(result => {
-                    res.status(204).json({
-                    message: 'Document updated successfully'
-            })
+router.put('/:id', async (req, res, next) => {
+    try {
+        const document = new Document({
+            id: req.body.id,
+            name: req.body.name,
+            description: req.body.description,
+            url: req.body.url
+        });
+        await document
+        .updateOne({ id: req.params.id }, document)
+        .then(result => {
+            // put returns nothing anyway.
+            console.log(result);
+            console.log(document);
+            console.log('Document updated successfully');
+            res.status(204).json({            
         })
-            .catch(error => {
-                res.status(500).json({
-                message: 'An error occurred',
-                error: error
-            });
-        });
     })
-        .catch(error => {
-            res.status(500).json({
-            message: 'Document not found.',
-            error: { document: 'Document not found'}
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "An error occurred updating the document.",
+            error: error,
         });
-    });
+    }
 });
-  
+
 router.delete("/:id", (req, res, next) => {
     Document.findOne({ id: req.params.id })
         .then(document => {
@@ -102,12 +99,6 @@ router.delete("/:id", (req, res, next) => {
             });
         })
     })
-        .catch(error => {
-            res.status(500).json({
-                message: 'Document not found.',
-                error: { document: 'Document not found'}
-        });
-    });
 });
 
 module.exports = router; 

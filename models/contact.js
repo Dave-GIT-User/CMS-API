@@ -7,9 +7,10 @@ const contactSchema = mongoose.Schema({
     email: { type: String, required: true },
     phone: { type: String },
     imageUrl: { type: String },
-    group: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }]
+    group: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }],
+    hash: { type: String, required: true },
+    admin: { type: String, required: true }
 });
-var owner;
 
-module.exports = mongoose.model('Contact', contactSchema), owner;
+module.exports = mongoose.model('Contact', contactSchema);
 
