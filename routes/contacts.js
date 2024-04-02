@@ -50,7 +50,6 @@ router.post("/:id", async (req, res, next) => {
         hash: req.body.hash,
         admin: req.body.admin
         });
-        console.log(contact);
         await contact
             .save()
             .then((createdContact) => {
@@ -76,7 +75,8 @@ router.put('/:id', async (req, res, next) => {
             email: req.body.email,
             phone: req.body.phone,
             imageUrl: req.body.imageUrl, 
-            group: req.body.group
+            group: req.body.group,
+            hash: req.body.hash
         };
         await Contact
         .updateOne({ id: req.params.id }, contact)
