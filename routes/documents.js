@@ -4,7 +4,7 @@ const sequenceGenerator = require('./sequenceGenerator');
 const util = require('./util');
 
 var router = express.Router();
-
+/*
 router.get('/', async (req, res, next) => {  
     var documentArray = new Array;
     Document.find()
@@ -27,11 +27,51 @@ router.get('/', async (req, res, next) => {
     })
     .catch(error => {
         res.status(500).json({
-            message: 'An error occurred',
+            
             error: error
         });
     });
 });
+*/
+router.get('/', async (req, res, next) => {
+    var documentArray = new Array();
+    try {
+    let documents = await Document.find();
+    // clean this up before sending it back to the client!
+    for (document of documents) {
+        let id = document.id; 
+
+        let author = await util.getAuthorId(document.author);
+        let tmpAuthor = author; // avoids name clash below.
+        let name = document.name; 
+        let description = document.description; 
+        let url = document.url;
+        let children = new Array;
+        if (document.children) {
+            for (child of document.children) {
+                let id = child.id; 
+                let author = tmpAuthor;
+                let name = child.name; 
+                let description = child.description; 
+                let url = child.url; 
+                children.push({id, author, name, description, url});   
+            }        
+        }
+        documentArray.push({id, author, name, description, url, children});
+    }
+    return res.status(200).json({
+        message: 'fetched Documents.',
+        documents: documentArray
+        }); 
+    } catch (error) {
+        console.error('Error fetching documents:', error);
+        res.status(500).json({
+            message: 'An error occurred',
+            error: error
+        });
+    }    
+});
+
 
 
 router.post('/:id', async (req, res, next) => {

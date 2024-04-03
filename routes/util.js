@@ -17,6 +17,19 @@ const util = {
             throw err;
         }
     },
+    async getAuthorId(_id) {
+        try {
+            const author = await Contact.findOne({"_id": _id}).exec();
+            if (!author) {
+                throw new Error('author not found');
+            }
+            const authorId = author.id;
+            return authorId;
+        } catch (err) {
+            console.error('Error obtaining author id:', err);
+            throw err;
+        }
+    },
 };
 
 module.exports = util;
