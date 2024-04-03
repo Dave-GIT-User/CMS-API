@@ -82,11 +82,6 @@ router.put('/:id', async (req, res, next) => {
         .updateOne({ id: req.params.id }, contact)
         .then(result => {
             // put returns nothing anyway.
-            console.log('Contact updated successfully');
-            console.log(result);
-
-            console.log(contact);
-
             res.status(204).json({            
         })
     })

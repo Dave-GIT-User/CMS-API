@@ -38,7 +38,6 @@ const sequenceGenerator = {
                 this.maxDocumentId++;
                 updateObject = { maxDocumentId: this.maxDocumentId };
                 nextId = this.maxDocumentId;
-                console.log('sg2');
                 break;
             case "messages":
                 this.maxMessageId++;

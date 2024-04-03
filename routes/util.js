@@ -11,7 +11,6 @@ const util = {
                 throw new Error('Sender not found');
             }
             const sender_id = sender._id;
-            console.log('util/getContact_id: '+id+' -> '+sender_id );
             return sender_id;
         } catch (err) {
             console.error('Error obtaining sender_id:', err);

@@ -36,15 +36,11 @@ router.get('/', async (req, res, next) => {
 router.post('/:id', async (req, res, next) => {
     try {
         const sender_id = await util.getContact_id(req.body.sender);
-        console.log('sender\'s primary key is '+sender_id);
         maxMessageId = await sequenceGenerator.nextId("messages");
         const message = new Message({
             id: maxMessageId,
             subject: req.body.subject,
             msgText: req.body.msgText,
-            // any new messages are currently authored by the user with id 0.
-            // owner is that user's primary key, _id. This is only used
-            // on the server side.
             sender: sender_id
         });
 
