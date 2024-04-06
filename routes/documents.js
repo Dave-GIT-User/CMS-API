@@ -41,7 +41,7 @@ router.get('/', async (req, res, next) => {
     for (document of documents) {
         let id = document.id; 
 
-        let author = await util.getAuthorId(document.author);
+        let author = await util.getContactId(document.author);
         let tmpAuthor = author; // avoids name clash below.
         let name = document.name; 
         let description = document.description; 

@@ -1,5 +1,8 @@
 
 const Contact = require('../models/contact');
+const Document = require('../models/document');
+const Message = require('../models/message');
+
 
 // pattern based on sequenceGenerator
 const util = {
@@ -17,7 +20,7 @@ const util = {
             throw err;
         }
     },
-    async getAuthorId(_id) {
+    async getContactId(_id) {
         try {
             const author = await Contact.findOne({"_id": _id}).exec();
             if (!author) {
@@ -30,6 +33,22 @@ const util = {
             throw err;
         }
     },
+    // Messages and documents each have foreign keys to contacts.
+    // If a contact is deleted, first their documents and 
+    // messages must be purged.
+    async purgeOphanedRecords(id) {
+        try {
+            // const author = await Contact.findOne(
+            const contact_id = await this.getContact_id(id);
+            await Document.deleteMany({author: contact_id})
+            console.log("orphaned documents purged.");
+            await Message.deleteMany({sender: contact_id})
+            console.log("orphaned messagess purged.");
+        } catch (err) {
+            console.error('Error purging orphaned records', err);
+            throw err;
+        }
+    }
 };
 
 module.exports = util;
