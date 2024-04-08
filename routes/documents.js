@@ -47,6 +47,7 @@ router.get('/', async (req, res, next) => {
 
 
 router.post('/:id', async (req, res, next) => {
+    console.log("adding a document");
     try {
         const author_id = await util.getContact_id(req.body.author);
         maxDocumentId = await sequenceGenerator.nextId("documents");

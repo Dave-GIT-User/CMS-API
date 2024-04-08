@@ -98,15 +98,13 @@ router.delete("/:id", async (req, res, next) => {
     try {
         const contactId = req.params.id;
         await util.purgeOphanedRecords(contactId);
-        await Contact.findOne({ id: id })
-        .then(contact => {
+        const contact = await Contact.findOne({ id: req.params.id })       
             contact.deleteOne({ id: contactId })
             .then(result => {
                 res.status(204).json({
                 message: "Contact deleted successfully"
                 });
-            })
-        })
+            })      
     } catch(error) {
         res.status(500).json({
         message: 'An error occurred',
