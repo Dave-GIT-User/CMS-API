@@ -4,9 +4,9 @@ const Document = require('../models/document');
 const Message = require('../models/message');
 
 
-// pattern based on sequenceGenerator
+// design pattern based on sequenceGenerator
 const util = {
-    // This is a way to determine the _id of the sender of a message, given their id.
+    // determine the _id of a contact, given their id.
     async getContact_id(id) {
         try {
             const sender = await Contact.findOne({"id": id}).exec();
@@ -20,6 +20,7 @@ const util = {
             throw err;
         }
     },
+    // determine the id of a contact, given their _id.
     async getContactId(_id) {
         try {
             const author = await Contact.findOne({"_id": _id}).exec();
@@ -43,7 +44,7 @@ const util = {
             await Document.deleteMany({author: contact_id})
             console.log("orphaned documents purged.");
             await Message.deleteMany({sender: contact_id})
-            console.log("orphaned messagess purged.");
+            console.log("orphaned messages purged.");
         } catch (err) {
             console.error('Error purging orphaned records', err);
             throw err;

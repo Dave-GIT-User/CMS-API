@@ -4,35 +4,7 @@ const sequenceGenerator = require('./sequenceGenerator');
 const util = require('./util');
 
 var router = express.Router();
-/*
-router.get('/', async (req, res, next) => {  
-    var documentArray = new Array;
-    Document.find()
-        .populate('author') // the foreign key -> contact
-        .then(documents => {
-        // clean this up before sending it back to the client!
-        for (document of documents) {
-            let id = document.id; 
-            let author = document.author.id;
-            let name = document.name; 
-            let description = document.description; 
-            let url = document.url;
-            let children = document.children; 
-            documentArray.push({id, author, name, description, url, children});
-        }        
-        res.status(200).json({
-            message: 'Documents fetched successfully!',
-            documents: documentArray
-        });
-    })
-    .catch(error => {
-        res.status(500).json({
-            
-            error: error
-        });
-    });
-});
-*/
+
 router.get('/', async (req, res, next) => {
     var documentArray = new Array();
     try {

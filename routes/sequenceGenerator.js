@@ -55,6 +55,7 @@ const sequenceGenerator = {
 
         try {
             await Sequence.updateOne({ _id: this.sequenceId }, { $set: updateObject }).exec();
+            console.log("sequence generator is fine.");
             return nextId;
         } catch (err) {
             console.error('Error updating sequence for', collectionType, err);
