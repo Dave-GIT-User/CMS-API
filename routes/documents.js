@@ -44,8 +44,6 @@ router.get('/', async (req, res, next) => {
     }    
 });
 
-
-
 router.post('/:id', async (req, res, next) => {
     console.log("adding a document");
     try {

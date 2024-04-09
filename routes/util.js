@@ -42,11 +42,9 @@ const util = {
             // const author = await Contact.findOne(
             const contact_id = await this.getContact_id(id);
             await Document.deleteMany({author: contact_id})
-            console.log("orphaned documents purged.");
             await Message.deleteMany({sender: contact_id})
-            console.log("orphaned messages purged.");
         } catch (err) {
-            console.error('Error purging orphaned records', err);
+            console.log('Error purging orphaned records');
             throw err;
         }
     }

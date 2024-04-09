@@ -10,7 +10,6 @@ var router = express.Router();
 // method of documents.js is that it 
 // is for adding, deleting or updating child documents
 router.post('/:id', async (req, res, next) => {
-    console.log("subdocuments post");
     try {
         index = req.params.id;
         const  document = await Document.findOne({"id": req.body.id}); // the parent document
@@ -34,19 +33,16 @@ router.post('/:id', async (req, res, next) => {
         var id = "0"; // only needed for add, ignored at the client otherwise.
         switch (operation) {
             case "delete":
-                console.log("delete");
                 deletedChild = document.children[index]; 
                 await deletedChild.deleteOne();
                 break;
             case "edit":
-                console.log("edit");
                 req.body.children[index].author = document.author;
-                console.log(req.body.children[index].author);
                 document.children[index] = req.body.children[index];
                 break;
             case "add": 
                 index = srcCount - 1; // ignore the index passed in req
-                const id = await sequenceGenerator.nextId("documents");
+                id = await sequenceGenerator.nextId("documents");
                 const author = document.author;
                 const name = req.body.children[index].name;
                 const description = req.body.children[index].description;
