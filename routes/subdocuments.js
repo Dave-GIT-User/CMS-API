@@ -1,12 +1,11 @@
 var express = require('express');
 const Document = require('../models/document');
 const sequenceGenerator = require('./sequenceGenerator');
-//const util = require('./util');
 
 var router = express.Router();
 
 // update a single document
-// The difference between this and the put
+// The difference between this and the post
 // method of documents.js is that it 
 // is for adding, deleting or updating child documents
 router.post('/:id', async (req, res, next) => {
